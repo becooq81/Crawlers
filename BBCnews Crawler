@@ -1,0 +1,37 @@
+#crawling as many BBC articles you want regarding the keyword of your choice
+
+from selenium import webdriver
+import time
+
+keyword = input('Keyword: ')
+num = int(input('Number of articles you need: '))
+
+driver = webdriver.Chrome('./chromedriver') #when your chrome driver is in the same folder as your python file
+count = 0
+
+if num % 10 == 0:
+    num_pages = num//10
+else:
+    num_pages = num//10 +1
+
+
+for i in range(num_pages):
+    page = f'https://www.bbc.co.uk/search?q={keyword}&page={i+1}'
+    driver.get(page)
+    time.sleep(1)
+    ten_articles = driver.find_elements_by_css_selector('p.ssrcss-7sxcrr-PromoHeadline.e1f5wbog6')
+    time.sleep(1)
+    for article in ten_articles:
+        count += 1
+        title = article.text
+
+        print(f'< {count} - {title} >')
+
+        print('\n')
+
+        if count == num:
+            break
+
+
+driver.close()
+
