@@ -27,8 +27,6 @@ for i in range(num_pages):
 
         print(f'< {count} - {title} >')
 
-        print('\n')
-
         if count == num:
             break
 
