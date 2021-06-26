@@ -1,0 +1,44 @@
+from selenium import webdriver
+import time
+
+driver = webdriver.Chrome('./chromedriver')
+login_url = 'https://nid.naver.com/nidlogin.login?mode=form&url=https%3A%2F%2Fwww.naver.com'
+driver.get(login_url)
+time.sleep(3)
+
+my_id = ###
+my_pw = ###
+
+driver.execute_script("document.getElementsByName('id')[0].value=\'"+my_id+"\'")
+driver.execute_script("document.getElementsByName('pw')[0].value=\'"+my_pw+"\'")
+
+time.sleep(2)
+
+driver.find_element_by_id('log.login').click()
+
+time.sleep(1)
+
+comu_url = 'https://cafe.naver.com/codeuniv'
+driver.get(comu_url)
+time.sleep(1)
+
+driver.find_element_by_id('menuLink90').click()
+time.sleep(1)
+
+driver.switch_to.frame('cafe_main') #frame의 이름 삽입
+time.sleep(4)
+
+driver.find_element_by_xpath('//*[@id="main-area"]/div[4]/table/tbody/tr[1]/td[1]/div[2]/div/a').click()
+time.sleep(3)
+content = driver.find_element_by_css_selector('div.se-section-text').text
+print("< 1 >\n"+content+"\n")
+driver.find_element_by_xpath('//*[@id="app"]/div/div/div/div[2]/a[1]').click()
+time.sleep(2)
+
+
+for i in range(19):
+    content = driver.find_element_by_css_selector('div.se-section-text').text
+    print(f"< {i+2} >\n" + content+"\n")
+    driver.find_element_by_xpath('//*[@id="app"]/div/div/div/div[2]/a[2]').click()
+    time.sleep(3)
+driver.close()
